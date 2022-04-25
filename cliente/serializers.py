@@ -87,11 +87,24 @@ class ClienteModifySerializer(serializers.Serializer):
     foto = serializers.ImageField(required=False, validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])])
     email=serializers.EmailField(required=False, max_length=70)
     telefono= serializers.CharField(required=False, min_length=9, max_length=9)
-    dni=serializers.CharField(required=False, validators=[UniqueValidator(queryset=Cliente.objects.all())],max_length=9)
+    dni=serializers.CharField(required=True, validators=[UniqueValidator(queryset=Cliente.objects.all())],max_length=9)
     calle=serializers.CharField(required=False, max_length=70)
 
     def validate(self,data):
         return data
+    
+    def update(self, cliente, data):
+        cliente.nombre=data.get('nombre',cliente.nombre)
+        cliente.apellidos=data.get('apellidos',cliente.apellidos)
+        cliente.email=data.get('email',cliente.email)
+        cliente.foto=data.get('foto',cliente.foto)
+        cliente.telefono=data.get('telefono',cliente.telefono)
+        cliente.calle=data.get('calle',cliente.calle)
+        cliente.dni=data.get('dni',cliente.dni)
+        cliente.save()
+        return cliente
+    
+    
     def create(self,data):
         user = Cliente.objects.create(**data)
         return user
