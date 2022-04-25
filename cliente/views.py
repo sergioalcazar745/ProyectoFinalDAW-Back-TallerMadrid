@@ -36,16 +36,17 @@ class ClienteViewSet(viewsets.GenericViewSet):
             arrResult.append(ClienteModelSerializer(result).data)
         return Response({'usuarios': arrResult}, status=status.HTTP_200_OK)
         
-    @action(detail=False, methods=['put'])
+    @action(detail=False, methods=['get'])
     def modificar(self, request):
-        queryset=Cliente.objects.filter(dni=request.POST['dni']).first()
+        print(request.GET['dni'])
+        queryset=Cliente.objects.filter(dni=request.GET['dni']).first()
         serializer=ClienteModifySerializer(queryset, request.data)
         serializer.is_valid(raise_exception=True)
         objeto=serializer.save()
         data=ClienteModelSerializer(objeto).data
         return Response(data, status=status.HTTP_200_OK)
         
-    @action(detail=False, methods=['delete'])
+    @action(detail=False, methods=['get'])
     def borrar(self, request):
         queryset=Cliente.objects.filter(dni=request.GET['dni']).first()
         try:
@@ -54,4 +55,4 @@ class ClienteViewSet(viewsets.GenericViewSet):
             return None
         else:
             data= ClienteModelSerializer(objeto).data   #Asi convierto el objeto que he guardado en serilizer para enviar el json
-            return Response(data, status=status.HTTP_200_OK)
+            return Response("Se ha eliminado correctamente", status=status.HTTP_200_OK)
