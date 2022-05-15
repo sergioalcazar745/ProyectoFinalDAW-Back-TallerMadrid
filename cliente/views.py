@@ -30,11 +30,9 @@ class ClienteViewSet(viewsets.GenericViewSet):
         #Capar para que solo salga si el usuario es admin
     @action(detail=False, methods=['get'])
     def users(self, request):
-        queryset=Cliente.objects.all()
-        arrResult = []
-        for result in queryset:  
-            arrResult.append(ClienteModelSerializer(result).data)
-        return Response({'usuarios': arrResult}, status=status.HTTP_200_OK)
+        users_list=Cliente.objects.all()
+        users_list_serializer = ClienteModelSerializer(users_list, many=True)
+        return Response(users_list_serializer.data, status=status.HTTP_200_OK)
         
     @action(detail=False, methods=['get'])
     def modificar(self, request):

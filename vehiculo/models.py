@@ -13,11 +13,15 @@ class Vehiculo(SafeDeleteModel):
     cliente=models.ForeignKey(Cliente,on_delete=models.CASCADE,null=True)
 
     def __str__(self):
-        return f'{self.matricula}' """Añadir dueño"""
+        return f'{self.marca, self.modelo, self.color, self.matricula, self.cliente}'
     
 class Arreglo(SafeDeleteModel):
+    id=models.AutoField(primary_key=True)
     fecha=models.DateField(default=date.today)
     descripcion=models.CharField(null=True,max_length=50)
     precio=models.DecimalField(null=True, max_digits=6, decimal_places=2)
     vehiculo=models.ForeignKey(Vehiculo,on_delete=models.CASCADE,null=True)
+    
+    def __str__(self):
+        return f'{self.fecha, self.descripcion, self.precio, self.vehiculo}'
     
