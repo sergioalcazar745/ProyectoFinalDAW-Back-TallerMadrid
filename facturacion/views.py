@@ -25,10 +25,10 @@ class GastoViewSet(viewsets.GenericViewSet):
     @action(detail=False, methods=['get'])
     def gastos(self, request):
         queryset=Gasto.objects.all()
-        arrResult = []
+        arrGastos = []
         for result in queryset:  
-            arrResult.append(GastoModelSerializer(result).data)
-        return Response({'gastos': arrResult}, status=status.HTTP_200_OK)
+            arrGastos.append(GastoModelSerializer(result).data)
+        return Response({'gastos': arrGastos}, status=status.HTTP_200_OK)
     
     @action(detail=False, methods=['get'])
     def gastosPorFecha(self,request):
@@ -38,18 +38,18 @@ class GastoViewSet(viewsets.GenericViewSet):
         fechaFin=date(int(fin[0]),int(fin[1]),int(fin[2]))
         queryset=Gasto.objects.filter(fecha__gte=fechaInicio,fecha__lte=fechaFin)
         
-        arrResult = {}
+        arrGastos = {}
 
         for result in queryset:
             messtr=result.fecha.strftime("%Y-%m-%d")
             mes=messtr.split("-")[1]
-            if mes in arrResult.keys():
-                arrResult[mes].append(GastoModelSerializer(result).data)
+            if mes in arrGastos.keys():
+                arrGastos[mes].append(GastoModelSerializer(result).data)
             else:
-                arrResult[mes]=[]
-                arrResult[mes].append(GastoModelSerializer(result).data)
+                arrGastos[mes]=[]
+                arrGastos[mes].append(GastoModelSerializer(result).data)
          
-        return Response({'gastos': arrResult}, status=status.HTTP_200_OK)
+        return Response({'gastos': arrGastos}, status=status.HTTP_200_OK)
     
     
     @action(detail=False, methods=['put'])
