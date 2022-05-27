@@ -18,9 +18,6 @@ class Factura(SafeDeleteModel):
     _safedelete_policy = SOFT_DELETE
     fecha=models.DateField(default=date.today)
     arreglo=models.ForeignKey(Arreglo,on_delete=models.CASCADE,null=True)
-    
-    
-    
 
     
     

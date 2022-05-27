@@ -11,5 +11,17 @@ class UserModelSerializer(serializers.ModelSerializer):
             'username',
             'first_name',
             'last_name',
-    
         )
+        
+        
+class userLoginSerializer(serializers.Serializer):
+    
+    usu=serializers.CharField( min_length=1,max_length=50)
+    password=serializers.CharField(min_length=1,max_length=50 )
+    
+    def validate(self, data):
+        return data
+        
+    def create(self, data):
+        pass
+    
