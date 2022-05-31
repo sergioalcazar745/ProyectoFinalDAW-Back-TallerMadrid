@@ -9,6 +9,8 @@ from datetime import date
 from facturacion.models import Gasto
 
 from facturacion.serializers import *
+from vehiculo.serializers import *
+from vehiculo.models import Arreglo
 
 # Create your views here.
 class GastoViewSet(viewsets.GenericViewSet):
@@ -28,7 +30,7 @@ class GastoViewSet(viewsets.GenericViewSet):
         arrGastos = []
         for result in queryset:  
             arrGastos.append(GastoModelSerializer(result).data)
-        return Response({'gastos': arrGastos}, status=status.HTTP_200_OK)
+        return Response(arrGastos, status=status.HTTP_200_OK)
     
     @action(detail=False, methods=['get'])
     def gastosPorFecha(self,request):
@@ -37,7 +39,9 @@ class GastoViewSet(viewsets.GenericViewSet):
         fechaInicio=date(int(inicio[0]),int(inicio[1]),int(inicio[2]))
         fechaFin=date(int(fin[0]),int(fin[1]),int(fin[2]))
         queryset=Gasto.objects.filter(fecha__gte=fechaInicio,fecha__lte=fechaFin)
+        querysetArreglos=Arreglo.objects.filter(fecha__gte=fechaInicio,fecha__lte=fechaFin)
         
+        arrArreglos={}
         arrGastos = {}
 
         for result in queryset:
@@ -48,8 +52,17 @@ class GastoViewSet(viewsets.GenericViewSet):
             else:
                 arrGastos[mes]=[]
                 arrGastos[mes].append(GastoModelSerializer(result).data)
+        
+        for result in querysetArreglos:
+            messtr=result.fecha.strftime("%Y-%m-%d")
+            mes=messtr.split("-")[1]
+            if mes in arrArreglos.keys():
+                arrArreglos[mes].append(ArregloModelSerializer(result).data)
+            else:
+                arrArreglos[mes]=[]
+                arrArreglos[mes].append(ArregloModelSerializer(result).data)
          
-        return Response({'gastos': arrGastos}, status=status.HTTP_200_OK)
+        return Response({'gastos': arrGastos, 'arreglos':arrArreglos}, status=status.HTTP_200_OK)
     
     
     @action(detail=False, methods=['put'])
