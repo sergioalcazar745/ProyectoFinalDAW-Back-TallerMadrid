@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'vehiculo',
     'rest_framework',
     'safedelete',
-    'corsheaders'
+    'corsheaders',
+    'facturacion',
+    'administrador'
 ]
 
 MIDDLEWARE = [
@@ -117,7 +119,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'taller',
         'USER': 'postgres',
-        'PASSWORD': 'raquel2022',
+        'PASSWORD': 'hugo2022',
         'HOST': '127.0.0.1',
         'DATABASE_PORT':'5432'
     }
@@ -167,3 +169,11 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# REST_FRAMEWORK = {
+#     # Use Django's standard `django.contrib.auth` permissions,
+#     # or allow read-only access for unauthenticated users.
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ]
+# }
