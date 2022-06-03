@@ -33,6 +33,19 @@ class ClienteViewSet(viewsets.GenericViewSet):
         users_list=Cliente.objects.all()
         users_list_serializer = ClienteModelSerializer(users_list, many=True)
         return Response(users_list_serializer.data, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['get'])
+    def user(self, request):
+        print(request.GET["dni"])
+        try:
+            cliente = Cliente.objects.filter(dni=request.GET["dni"]).first()
+            print(cliente)
+            if(cliente is None):
+                return Response({'mensaje': "No existe ese cliente con ese dni"}, status=status.HTTP_404_NOT_FOUND)
+        except self.model.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        cliente_serializer = ClienteModelSerializer(cliente)
+        return Response(cliente_serializer.data, status=status.HTTP_200_OK)
         
     @action(detail=False, methods=['get'])
     def modificar(self, request):
