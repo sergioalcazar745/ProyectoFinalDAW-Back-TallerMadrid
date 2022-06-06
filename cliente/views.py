@@ -16,18 +16,19 @@ from cliente.models import Cliente
 
 class ClienteViewSet(viewsets.GenericViewSet):
 
-    #permission_classes=(IsAuthenticated,)
-    
+    #permission_classes=(IsAuthenticated,)    
     @action(detail=False, methods=['post'])
     def signup(self, request):
         """User sign up."""
+        print("Que pasa locoo: " , request.data)
         serializer = ClienteSignUpSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        print("No hay excepcion: " , serializer)
         user = serializer.save()
-        data = ClienteSignUpSerializer(user).data
+        data = ClienteModelSerializer(user).data
         return Response(data, status=status.HTTP_201_CREATED)
     
-        #Capar para que solo salga si el usuario es admin
+    #Capar para que solo salga si el usuario es admin
     @action(detail=False, methods=['get'])
     def users(self, request):
         users_list=Cliente.objects.all()

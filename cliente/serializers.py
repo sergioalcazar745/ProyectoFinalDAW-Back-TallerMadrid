@@ -66,6 +66,7 @@ class ClienteSignUpSerializer(serializers.Serializer):
     
     
     def validate(self, data):
+        print("PADRE")
         image = None
         if 'photo' in data:
             image = data['photo']
@@ -77,7 +78,9 @@ class ClienteSignUpSerializer(serializers.Serializer):
         return data
 
     def create(self, data):
+        print("Datita: ", data)
         user = Cliente.objects.create(**data)
+        print("Cliente creado: ", user)
         return user
     
     
