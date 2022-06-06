@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'safedelete',
     'corsheaders',
     'facturacion',
-    'administrador'
+    'administrador',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -77,6 +78,18 @@ TEMPLATES = [
         },
     },
 ]
+
+#Para que funcione el token
+REST_FRAMEWORK = {                      
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+}
 
 #Para el cors
 CORS_ALLOW_ALL_ORIGINS:True
@@ -119,7 +132,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'taller',
         'USER': 'postgres',
-        'PASSWORD': 'sergio2022',
+        'PASSWORD': 'hugo2022',
         'HOST': '127.0.0.1',
         'DATABASE_PORT':'5432'
     }
