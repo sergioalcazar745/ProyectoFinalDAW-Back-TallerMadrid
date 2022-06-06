@@ -30,6 +30,17 @@ class VehiculoViewSet(viewsets.GenericViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
         vehiculo_serializer = VehiculoModelSerializer(vehiculo)
         return Response(vehiculo_serializer.data, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['get'])
+    def getvehiculobydni(self, request):
+        try:
+            vehiculo_list = self.model.objects.filter(cliente__dni=request.GET["dni"])
+            if(vehiculo_list is None):
+                return Response({'mensaje': "No existe ese vehiculo con ese cliente"}, status=status.HTTP_404_NOT_FOUND)
+        except self.model.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        vehiculo_list_serializer = self.serializer_class(vehiculo_list, many=True)
+        return Response(vehiculo_list_serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['post'])
     def savevehiculo(self, request):
@@ -78,6 +89,17 @@ class ArregloViewSet(viewsets.GenericViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
         arreglo_serializer = self.serializer_class(arreglo)
         return Response(arreglo_serializer.data, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['get'])
+    def getarreglobymatricula(self, request):
+        try:
+            arreglo_list = self.model.objects.filter(vehiculo__matricula=request.GET["matricula"])
+            if(arreglo_list is None):
+                return Response({'mensaje': "No existe ese vehiculo con esa matricula"}, status=status.HTTP_404_NOT_FOUND)
+        except self.model.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        arreglo_list_serializer = self.serializer_class(arreglo_list, many=True)
+        return Response(arreglo_list_serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['post'])
     def savearreglo(self, request):
