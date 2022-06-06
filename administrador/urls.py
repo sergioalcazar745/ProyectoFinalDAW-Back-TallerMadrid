@@ -11,6 +11,7 @@ from administrador import views as administrador_views
 
 router = DefaultRouter()
 router.register(r'administrador', administrador_views.AdminViewSet, basename='administrador'),
+router.register(r'administradorOut', administrador_views.AdminOutViewSet, basename='administradorOut'),
 
 urlpatterns = [
     path('', include(router.urls)),
