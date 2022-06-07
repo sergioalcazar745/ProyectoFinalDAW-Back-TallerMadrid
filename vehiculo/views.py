@@ -66,8 +66,9 @@ class VehiculoViewSet(viewsets.GenericViewSet):
         vehiculo = self.model.objects.filter(matricula=request.GET["matricula"]).first()
         if(vehiculo is None):
             return Response({'mensaje': "No existe ese vehiculo con esa matricula"}, status=status.HTTP_404_NOT_FOUND)
-        vehiculo_serializer = VehiculoModelSerializer(vehiculo)
-        return Response({'mensaje': "Se ha eliminado correctamente"}, status=status.HTTP_200_OK)
+        vehiculo_delete = vehiculo.delete()
+        vehiculo_serializer = VehiculoModelSerializer(vehiculo_delete)
+        return Response(vehiculo_serializer.data, status=status.HTTP_200_OK)
 
 class ArregloViewSet(viewsets.GenericViewSet):
     model = Arreglo

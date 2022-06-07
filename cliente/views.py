@@ -22,12 +22,14 @@ class ClienteViewSet(viewsets.GenericViewSet):
         """User sign up."""
         print("Que pasa locoo: " , request.data)
         serializer = ClienteSignUpSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        print("No hay excepcion: " , serializer)
-        user = serializer.save()
-        data = ClienteModelSerializer(user).data
-        return Response(data, status=status.HTTP_201_CREATED)
-    
+        print("prueba: ", serializer)
+        if serializer.is_valid():
+            print("No hay excepcion: " , serializer)
+            user = serializer.save()
+            data = ClienteModelSerializer(user).data
+            return Response(data, status=status.HTTP_201_CREATED)
+        else:
+            return Response("Validaciones incorrectas", status=status.HTTP_400_BAD_REQUEST)
     #Capar para que solo salga si el usuario es admin
     @action(detail=False, methods=['get'])
     def users(self, request):
@@ -48,18 +50,19 @@ class ClienteViewSet(viewsets.GenericViewSet):
         cliente_serializer = ClienteModelSerializer(cliente)
         return Response(cliente_serializer.data, status=status.HTTP_200_OK)
         
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['put'])
     def modificar(self, request):
-        print(request.GET['dni'])
-        queryset=Cliente.objects.filter(dni=request.GET['dni']).first()
-        serializer=ClienteModifySerializer(queryset, request.data)
+        print("ATENTO: ",request.data['dni'])
+        queryset=Cliente.objects.filter(dni=request.data["dni"]).first()
+        serializer=ClienteModifySerializer(queryset, data=request.data)
         serializer.is_valid(raise_exception=True)
         objeto=serializer.save()
         data=ClienteModelSerializer(objeto).data
         return Response(data, status=status.HTTP_200_OK)
         
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['delete'])
     def borrar(self, request):
+        print(request.GET['dni'])
         queryset=Cliente.objects.filter(dni=request.GET['dni']).first()
         try:
             objeto=queryset.delete()
