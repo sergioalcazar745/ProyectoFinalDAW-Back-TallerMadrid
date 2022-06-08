@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'facturacion',
     'administrador',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'django_rest_passwordreset'
 ]
 
 MIDDLEWARE = [
@@ -66,7 +67,7 @@ ROOT_URLCONF = 'TallerMadrid.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'email')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -183,10 +184,13 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# REST_FRAMEWORK = {
-#     # Use Django's standard `django.contrib.auth` permissions,
-#     # or allow read-only access for unauthenticated users.
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-#     ]
-# }
+
+
+#PARA EL ENVIO DE CORREOS
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  
+EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_USE_TLS = False
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'daw202211@estudiantes.salesianasnsp.es'
+EMAIL_HOST_PASSWORD = '@palaci0'
+EMAIL_USE_SSL = True
