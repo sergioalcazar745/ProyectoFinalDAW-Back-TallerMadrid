@@ -83,7 +83,7 @@ class ClienteViewSet(viewsets.GenericViewSet):
         
     @action(detail=False, methods=['post'])
     def formularioContacto(self,request):
-        print (request.data['nombre'])
+        # print (request.data['nombre'])
         site_url = 'https://localhost:3000/otro'
         site_shortcut_name = 'Click2Consent'
         dirCorreo='daw202237@estudiantes.salesianasnsp.es'
@@ -94,9 +94,14 @@ class ClienteViewSet(viewsets.GenericViewSet):
             # 'reset_password_url': "{}?token={}".format(site_url, reset_password_token.key),
             'site_name': site_shortcut_name,
             'site_domain': site_url,
+            'apellidos': request.data['apellidos'],
+            'email': request.data['mail'],
+            'telefono':request.data['tfn'],
+            'coche':request.data['vehiculo'],
+            'motivo':request.data['motivo'],
         }
         # render email text
-        title = "Peticion Cita"
+        title = request.data['nombre']
         email_html_message = render_to_string('CorreoContacto.html', context)
         email_plaintext_message = render_to_string('CorreoContacto.txt', context)
         msg = EmailMultiAlternatives(
@@ -105,13 +110,17 @@ class ClienteViewSet(viewsets.GenericViewSet):
             # message:
             email_plaintext_message,
             # from:
-            "Peticion cita <hugo.elegido@smartbits-es.es>",
+            "Solicitud Cita",
             # to:
             [dirCorreo],
             # BCC   
             ['daw202213@estudiantes.salesianasnsp.es']
         )
         msg.attach_alternative(email_html_message, "text/html")
-        msg.send()
-        data="Correo enviado Correctamente"
-        return Response(data, status=status.HTTP_200_OK)
+        if(msg.send()):
+            data="Correo enviado Correctamente"
+            return Response(data, status=status.HTTP_200_OK)
+        else:
+            data="Ha ocurrido un problema, no se ha podido enviar el correo"
+            return Response(data, status=status.HTTP_404_NOT_FOUND)
+        
