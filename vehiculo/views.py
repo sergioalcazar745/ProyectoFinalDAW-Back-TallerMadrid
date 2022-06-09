@@ -76,7 +76,7 @@ class ArregloViewSet(viewsets.GenericViewSet):
 
     @action(detail=False, methods=['get'])
     def arreglos(self, request):
-        arreglo_list = self.model.objects.all()
+        arreglo_list = self.model.objects.all().order_by('-fecha')
         arreglo_list_serializer = self.serializer_class(arreglo_list, many=True)
         return Response(arreglo_list_serializer.data, status=status.HTTP_200_OK)
 

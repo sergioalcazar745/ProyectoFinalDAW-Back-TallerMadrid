@@ -26,7 +26,7 @@ class GastoViewSet(viewsets.GenericViewSet):
      
     @action(detail=False, methods=['get'])
     def gastos(self, request):
-        queryset=Gasto.objects.all()
+        queryset=Gasto.objects.all().order_by('-fecha')
         arrGastos = []
         for result in queryset:  
             arrGastos.append(GastoModelSerializer(result).data)
