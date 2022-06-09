@@ -10,7 +10,7 @@ def url(self,filename):
 
 
 # Create your models here.
-class Cliente(SafeDeleteModel):
+class Cliente(models.Model):
     
     def foto_cliente(self):
         return mark_safe('<img src="/%s" width=50px height=50px />'%(self.foto))

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from vehiculo.models import Arreglo
 
 # Create your models here.
-class Gasto(SafeDeleteModel):
+class Gasto(models.Model):
     _safedelete_policy = SOFT_DELETE
     fecha=models.DateField(default=date.today)
     usuario=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
@@ -14,7 +14,7 @@ class Gasto(SafeDeleteModel):
     importe=models.DecimalField(max_digits=6,decimal_places=2,null=True)
     
     
-class Factura(SafeDeleteModel):
+class Factura(models.Model):
     _safedelete_policy = SOFT_DELETE
     fecha=models.DateField(default=date.today)
     arreglo=models.ForeignKey(Arreglo,on_delete=models.CASCADE,null=True)

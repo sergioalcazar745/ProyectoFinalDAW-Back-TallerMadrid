@@ -35,6 +35,7 @@ class AdminViewSet(viewsets.GenericViewSet):
         
         #LOGIN PARA EL TOKEN, PONER AL FINAL CUANDO TODO VAYA BIEN
         serializer = UserLoginSerializer(data=request.data)
+        print("serializer: ", serializer)
         serializer.is_valid(raise_exception=True)
         user, token = serializer.save()
         data = {

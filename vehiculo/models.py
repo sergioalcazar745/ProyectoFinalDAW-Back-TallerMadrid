@@ -4,7 +4,7 @@ from safedelete.models import SafeDeleteModel
 from safedelete.models import SOFT_DELETE
 from cliente.models import Cliente
 
-class Vehiculo(SafeDeleteModel):
+class Vehiculo(models.Model):
     _safedelete_policy = SOFT_DELETE
     marca=models.CharField(null=True,max_length=50)
     modelo=models.CharField(null=True,max_length=50)
@@ -15,7 +15,7 @@ class Vehiculo(SafeDeleteModel):
     def __str__(self):
         return f'{self.marca, self.modelo, self.color, self.matricula, self.cliente}'
     
-class Arreglo(SafeDeleteModel):
+class Arreglo(models.Model):
     id=models.AutoField(primary_key=True)
     fecha=models.DateField(default=date.today)
     descripcion=models.CharField(null=True,max_length=50)
