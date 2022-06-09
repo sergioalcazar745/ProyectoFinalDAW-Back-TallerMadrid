@@ -60,7 +60,6 @@ class AdminOutViewSet(viewsets.GenericViewSet):
 
     @action(detail=False, methods=['get'])
     def logout(self, request):  
-        print("entroooo")
         request.user.auth_token.delete()
         data="Sesion cerrada"
         return Response({'data': data}, status=status.HTTP_200_OK)
