@@ -50,17 +50,19 @@ class VehiculoViewSet(viewsets.GenericViewSet):
             vehiculo_response_seralizer = VehiculoModelSerializer(vehiculo_response).data
             return Response(vehiculo_response_seralizer, status=status.HTTP_201_CREATED)
         else:
-            return Response(vehiculo_serializer.errors)
+            return Response({'mensaje': "Errores de validaciones"}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=False, methods=['put'])
     def updatevehiculo(self, request):
         queryset=self.model.objects.filter(matricula=request.data["matricula"]).first()
         serializer=VehiculoActualizarSerializer(queryset, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        objeto=serializer.save()
-        data=VehiculoActualizarSerializer(objeto).data
-        return Response(data, status=status.HTTP_200_OK)
-    
+        if serializer.is_valid():
+            objeto=serializer.save()
+            data=VehiculoActualizarSerializer(objeto).data
+            return Response(data, status=status.HTTP_200_OK)
+        else:
+            return Response({'mensaje': "Errores de validaciones"}, status=status.HTTP_400_BAD_REQUEST)
+                
     @action(detail=False, methods=['get'])
     def deletevehiculo(self, request):
         vehiculo = self.model.objects.filter(matricula=request.GET["matricula"]).first()
@@ -127,10 +129,12 @@ class ArregloViewSet(viewsets.GenericViewSet):
     def updatearreglo(self, request):
         arreglo=self.model.objects.filter(id=request.data["id"]).first()
         arreglo_serializer=ArregloActualizarSerializer(arreglo, data=request.data)
-        arreglo_serializer.is_valid(raise_exception=True)
-        arreglo_response=arreglo_serializer.save()
-        arreglo_serializer_response=ArregloActualizarSerializer(arreglo_response)
-        return Response(arreglo_serializer_response.data, status=status.HTTP_200_OK)
+        if arreglo_serializer.is_valid():
+            arreglo_response=arreglo_serializer.save()
+            arreglo_serializer_response=ArregloActualizarSerializer(arreglo_response)
+            return Response(arreglo_serializer_response.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'mensaje': "Comprueba que los datos sean válidos"}, status=status.HTTP_400_BAD_REQUEST)
     
     @action(detail=False, methods=['get'])
     def deletearreglo(self, request):
