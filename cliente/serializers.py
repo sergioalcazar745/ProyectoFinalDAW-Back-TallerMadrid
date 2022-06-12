@@ -93,8 +93,8 @@ class ClienteModifySerializer(serializers.Serializer):
     nombre = serializers.CharField(required=False, min_length=4, max_length=50)
     apellidos = serializers.CharField(
         required=False, min_length=3, max_length=70)
-    foto = serializers.ImageField(required=False, validators=[
-                                  FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])])
+    # foto = serializers.ImageField(required=False, validators=[
+    #                               FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])])
     email = serializers.EmailField(required=False, max_length=70)
     telefono = serializers.CharField(
         required=False, min_length=9, max_length=9)
@@ -115,7 +115,7 @@ class ClienteModifySerializer(serializers.Serializer):
         cliente.telefono = data.get('telefono', cliente.telefono)
         cliente.calle = data.get('calle', cliente.calle)
         cliente.dni = data.get('dni', cliente.dni)
-        print("SAVE-UPDATE: " + cliente)
+        print("SAVE-UPDATE: ", cliente)
         cliente.save()
         return cliente
 
