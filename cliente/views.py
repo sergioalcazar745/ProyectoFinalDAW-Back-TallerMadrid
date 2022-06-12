@@ -68,9 +68,9 @@ class ClienteViewSet(viewsets.GenericViewSet):
         data=ClienteModelSerializer(objeto).data
         return Response(data, status=status.HTTP_200_OK)
         
-    @action(detail=False, methods=['delete'])
+    @action(detail=False, methods=['get'])
     def borrar(self, request):
-        print(request.GET['dni'])
+        print("NO ENTIENDO NADA", request.GET['dni'])
         queryset=Cliente.objects.filter(dni=request.GET['dni']).first()
         try:
             objeto=queryset.delete()
