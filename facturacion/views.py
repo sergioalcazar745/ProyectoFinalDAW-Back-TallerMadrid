@@ -41,26 +41,28 @@ class GastoViewSet(viewsets.GenericViewSet):
         queryset=Gasto.objects.filter(fecha__gte=fechaInicio,fecha__lte=fechaFin)
         querysetArreglos=Arreglo.objects.filter(fecha__gte=fechaInicio,fecha__lte=fechaFin)
         
-        arrArreglos={}
-        arrGastos = {}
+        arrArreglos=[]
+        arrGastos = []
 
         for result in queryset:
-            messtr=result.fecha.strftime("%Y-%m-%d")
-            mes=messtr.split("-")[1]
-            if mes in arrGastos.keys():
-                arrGastos[mes].append(GastoModelSerializer(result).data)
-            else:
-                arrGastos[mes]=[]
-                arrGastos[mes].append(GastoModelSerializer(result).data)
+            # messtr=result.fecha.strftime("%Y-%m-%d")
+            # mes=messtr.split("-")[1]
+            # if mes in arrGastos.keys():
+            #     arrGastos[mes].append(GastoModelSerializer(result).data)
+            # else:
+            #     arrGastos[mes]=[]
+            #     arrGastos[mes].append(GastoModelSerializer(result).data)
+            arrGastos.append(GastoModelSerializer(result).data)
         
         for result in querysetArreglos:
-            messtr=result.fecha.strftime("%Y-%m-%d")
-            mes=messtr.split("-")[1]
-            if mes in arrArreglos.keys():
-                arrArreglos[mes].append(ArregloModelSerializer(result).data)
-            else:
-                arrArreglos[mes]=[]
-                arrArreglos[mes].append(ArregloModelSerializer(result).data)
+            # messtr=result.fecha.strftime("%Y-%m-%d")
+            # mes=messtr.split("-")[1]
+            # if mes in arrArreglos.keys():
+            #     arrArreglos[mes].append(ArregloModelSerializer(result).data)
+            # else:
+            #     arrArreglos[mes]=[]
+            #     arrArreglos[mes].append(ArregloModelSerializer(result).data)
+            arrArreglos.append(ArregloModelSerializer(result).data)
          
         return Response({'gastos': arrGastos, 'arreglos':arrArreglos}, status=status.HTTP_200_OK)
     
