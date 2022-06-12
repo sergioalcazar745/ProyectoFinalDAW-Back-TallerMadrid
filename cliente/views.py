@@ -37,7 +37,7 @@ class ClienteViewSet(viewsets.GenericViewSet):
             data = ClienteModelSerializer(user).data
             return Response(data, status=status.HTTP_201_CREATED)
         else:
-            return Response("Validaciones incorrectas", status=status.HTTP_400_BAD_REQUEST)
+            return Response({'mensaje': "Error en la validacion"}, status=status.HTTP_400_BAD_REQUEST)
     #Capar para que solo salga si el usuario es admin
     @action(detail=False, methods=['get'])
     def users(self, request):
@@ -75,7 +75,7 @@ class ClienteViewSet(viewsets.GenericViewSet):
         try:
             objeto=queryset.delete()
         except Cliente.DoesNotExist:
-            return None
+            return Response({'mensaje': "No existe el cliente"}, status=status.HTTP_200_OK)
         else:
             data= ClienteModelSerializer(objeto).data   #Asi convierto el objeto que he guardado en serilizer para enviar el json
             return Response("Se ha eliminado correctamente", status=status.HTTP_200_OK)

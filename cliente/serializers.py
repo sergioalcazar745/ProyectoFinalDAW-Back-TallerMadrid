@@ -34,18 +34,18 @@ class ClienteModelSerializer(serializers.ModelSerializer):
 class ClienteSignUpSerializer(serializers.Serializer):
 
     nombre = serializers.CharField(
-        #min_length=3,
-        #max_length=50,
-        # validators=[UniqueValidator(queryset=Cliente.objects.all())]
+        min_length=3,
+        max_length=50,
+        validators=[UniqueValidator(queryset=Cliente.objects.all())]
     )
 
     apellidos = serializers.CharField(
-        #min_length=3,
-        #max_length=70,
+        min_length=3,
+        max_length=70,
     )
 
     email = serializers.EmailField(
-        #max_length=70
+        max_length=70
     )
 
     #foto = serializers.ImageField(
@@ -54,31 +54,31 @@ class ClienteSignUpSerializer(serializers.Serializer):
         #required=False
     #)
 
-  #  phone_regex = RegexValidator(
-   # regex=r'\d*',
-    #message="Debes introducir un número con el siguiente formato: +999999999. El límite son de 15 dígitos."
-   # )
-    telefono = serializers.CharField(  # validators=[phone_regex],
-        #min_length=9,
-        #max_length=9
+    phone_regex = RegexValidator(
+    regex=r'\d*',
+    message="Debes introducir un número con el siguiente formato: +999999999. El límite son de 15 dígitos."
+    )
+    telefono = serializers.CharField(   validators=[phone_regex],
+        min_length=9,
+        max_length=9
     )
 
     calle = serializers.CharField(max_length=70)
 
     dni = serializers.CharField(
-        #max_length=9,
-        # validators=[UniqueValidator(queryset=Cliente.objects.all())]
+        max_length=9,
+        validators=[UniqueValidator(queryset=Cliente.objects.all())]
     )
 
     def validate(self, data):
-        # print("PADRE")
-        # image = None
-        # if 'photo' in data:
-        #     image = data['photo']
+        print("PADRE")
+        image = None
+        if 'photo' in data:
+            image = data['photo']
 
-        # if image:
-        #     if image.size > (512 * 1024):
-        #         raise serializers.ValidationError(f"La imagen es demasiado grande, el peso máximo permitido es de 512KB y el tamaño enviado es de {round(image.size / 1024)}KB")
+        if image:
+           if image.size > (512 * 1024):
+               raise serializers.ValidationError(f"La imagen es demasiado grande, el peso máximo permitido es de 512KB y el tamaño enviado es de {round(image.size / 1024)}KB")
 
         return data
 
