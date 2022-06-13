@@ -67,10 +67,12 @@ class GastoViewSet(viewsets.GenericViewSet):
         return Response({'gastos': arrGastos, 'arreglos':arrArreglos}, status=status.HTTP_200_OK)
     
     
-    @action(detail=False, methods=['put'])
+    @action(detail=False, methods=['put','post'])
     def UpdateGasto(self, request):
         queryset=Gasto.objects.filter(id=int(request.GET['id'])).first()
         serializer=GastoUpdateSerializer(queryset, data=request.data)
+        print("este es el serializer")
+        print(serializer)
         serializer.is_valid(raise_exception=True)
         objeto=serializer.save()
         data=GastoModelSerializer(objeto).data
