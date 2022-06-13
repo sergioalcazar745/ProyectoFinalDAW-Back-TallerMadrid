@@ -194,3 +194,8 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = 'daw202211@estudiantes.salesianasnsp.es'
 EMAIL_HOST_PASSWORD = '@palaci0'
 EMAIL_USE_SSL = True
+
+#LENGUAJE
+LANGUAGE_CODE = 'es'
+TIME_ZONE = 'America/Lima'
+USE_I18N = True

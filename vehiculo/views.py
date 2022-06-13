@@ -45,12 +45,15 @@ class VehiculoViewSet(viewsets.GenericViewSet):
     @action(detail=False, methods=['post'])
     def savevehiculo(self, request):
         vehiculo_serializer = VehiculoSerializer(data=request.data)
+        print("HIJO DE PUTA")
         if vehiculo_serializer.is_valid():
+            print("HIJO DE PUTAaaaaaaa", vehiculo_serializer)
             vehiculo_response = vehiculo_serializer.save()
             vehiculo_response_seralizer = VehiculoModelSerializer(vehiculo_response).data
             return Response(vehiculo_response_seralizer, status=status.HTTP_201_CREATED)
         else:
-            return Response({'mensaje': "Errores de validaciones"}, status=status.HTTP_400_BAD_REQUEST)
+            print("HIJO DE PUTA2")
+            return Response({'mensaje': vehiculo_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=False, methods=['put'])
     def updatevehiculo(self, request):
@@ -61,16 +64,21 @@ class VehiculoViewSet(viewsets.GenericViewSet):
             data=VehiculoActualizarSerializer(objeto).data
             return Response(data, status=status.HTTP_200_OK)
         else:
-            return Response({'mensaje': "Errores de validaciones"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'mensaje': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
                 
     @action(detail=False, methods=['get'])
     def deletevehiculo(self, request):
         vehiculo = self.model.objects.filter(matricula=request.GET["matricula"]).first()
-        if(vehiculo is None):
-            return Response({'mensaje': "No existe ese vehiculo con esa matricula"}, status=status.HTTP_404_NOT_FOUND)
-        vehiculo_delete = vehiculo.delete()
-        vehiculo_serializer = VehiculoModelSerializer(vehiculo_delete)
-        return Response(vehiculo_serializer.data, status=status.HTTP_200_OK)
+        print(vehiculo)
+        # if(vehiculo is None):
+        #     return Response({'mensaje': "No existe ese vehiculo con esa matricula"}, status=status.HTTP_404_NOT_FOUND)
+        try:
+            vehiculo.delete()
+            return Response({'mensaje': "Se ha eliminado correctamente"}, status=status.HTTP_200_OK)
+        except Vehiculo.DoesNotExist:
+            return Response({'mensaje': "No existe ese arreglo con ese id"}, status=status.HTTP_400_BAD_REQUEST)
+    
+        
 
 class ArregloViewSet(viewsets.GenericViewSet):
     model = Arreglo
@@ -123,7 +131,8 @@ class ArregloViewSet(viewsets.GenericViewSet):
             arreglo_response_seralizer = ArregloModelSerializer(arreglo_response).data
             return Response(arreglo_response_seralizer, status=status.HTTP_201_CREATED)
         else:
-            return Response(arreglo_serializer.errors)
+            print("ERROREESS" ,arreglo_serializer.errors)
+            return Response({'mensaje': arreglo_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=False, methods=['put'])
     def updatearreglo(self, request):
@@ -132,9 +141,9 @@ class ArregloViewSet(viewsets.GenericViewSet):
         if arreglo_serializer.is_valid():
             arreglo_response=arreglo_serializer.save()
             arreglo_serializer_response=ArregloActualizarSerializer(arreglo_response)
-            return Response(arreglo_serializer_response.data, status=status.HTTP_200_OK)
+            return Response(arreglo_serializer_response.data, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'mensaje': "Comprueba que los datos sean válidos"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'mensaje': arreglo_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     
     @action(detail=False, methods=['get'])
     def deletearreglo(self, request):
@@ -143,9 +152,9 @@ class ArregloViewSet(viewsets.GenericViewSet):
         if(arreglo is None):
             return Response({'mensaje': "No existe ese arreglo con ese id"}, status=status.HTTP_404_NOT_FOUND)
         try:
-            arreglo_deleted=arreglo.delete()
+            arreglo.delete()
+            return Response({'mensaje': "Se ha eliminado correctamente"}, status=status.HTTP_200_OK)
         except Arreglo.DoesNotExist:
             return Response({'mensaje': "No existe ese arreglo con ese id"}, status=status.HTTP_404_NOT_FOUND)
-        else:
-            return Response({'mensaje': "Se ha eliminado correctamente"}, status=status.HTTP_200_OK)
+            
     

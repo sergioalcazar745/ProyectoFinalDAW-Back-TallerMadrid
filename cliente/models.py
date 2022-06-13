@@ -12,14 +12,14 @@ def url(self,filename):
 # Create your models here.
 class Cliente(models.Model):
     
-    def foto_cliente(self):
-        return mark_safe('<img src="/%s" width=50px height=50px />'%(self.foto))
+    # def foto_cliente(self):
+    #     return mark_safe('<img src="/%s" width=50px height=50px />'%(self.foto))
         
     _safedelete_policy = SOFT_DELETE
     nombre= models.CharField(null=True, max_length=50)
     apellidos= models.CharField(null=True, max_length=70)
     email = models.EmailField(null=True, max_length=70)
-    foto = models.ImageField(null=True, upload_to=url)
+    # foto = models.ImageField(null=True, upload_to=url)
     telefono = models.CharField(null=True,max_length=9)
     calle = models.CharField(null=True, max_length=70)
     dni = models.CharField(max_length=9, primary_key=True)
