@@ -1,3 +1,4 @@
+from importlib.metadata import requires
 from facturacion.models import Gasto
 from rest_framework import serializers
 from administrador.serializers import UserModelSerializer
@@ -10,6 +11,7 @@ class GastoModelSerializer(serializers.ModelSerializer):
     class Meta:
         model=Gasto
         fields= (
+            'id',
             'fecha',
             'usuario',
             'concepto',
@@ -17,6 +19,7 @@ class GastoModelSerializer(serializers.ModelSerializer):
         )
         
 class GastoAddSerializer(serializers.Serializer):
+   
     fecha=serializers.DateField(required=False)
     usuario = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     concepto=serializers.CharField(min_length=1,max_length=250)
@@ -33,12 +36,17 @@ class GastoAddSerializer(serializers.Serializer):
     
     
 class GastoUpdateSerializer(serializers.Serializer):
+    # id=serializers.IntegerField(max_value=None, min_value=None,required=False)
+    # fecha=serializers.DateField(required=False)
+    # usuario=serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),required=False)
+    # concepto=serializers.CharField(min_length=1,max_length=250,required=False)
+    # importe=serializers.DecimalField(max_digits=10,decimal_places=2, required=False)
     
+    id=serializers.IntegerField(required=False)
     fecha=serializers.DateField(required=False)
     usuario=serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),required=False)
-    concepto=serializers.CharField(min_length=1,max_length=250,required=False)
-    importe=serializers.DecimalField(max_digits=6,decimal_places=2, required=False)
-    
+    concepto=serializers.CharField(required=False)
+    importe=serializers.DecimalField(max_digits=10,decimal_places=2,required=False)
     def validate(self,data):
         return data
 
