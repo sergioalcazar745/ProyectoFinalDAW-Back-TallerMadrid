@@ -31,7 +31,9 @@ class VehiculoSerializer(serializers.Serializer):
     color = serializers.CharField(min_length=1, max_length=250)
 
     matricula = serializers.CharField(
-        validators=[UniqueValidator(queryset=Vehiculo.objects.all())]
+        validators=[UniqueValidator(queryset=Vehiculo.objects.all())],
+        min_length=6,
+        max_length=7
     )
     cliente = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Cliente.objects.all())
 

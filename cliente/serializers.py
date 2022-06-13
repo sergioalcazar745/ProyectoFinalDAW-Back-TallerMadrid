@@ -22,7 +22,6 @@ class ClienteModelSerializer(serializers.ModelSerializer):
             'nombre',
             'apellidos',
             'email',
-            'foto',
             'telefono',
             'calle',
             'dni',
@@ -71,14 +70,13 @@ class ClienteSignUpSerializer(serializers.Serializer):
     )
 
     def validate(self, data):
-        print("PADRE")
-        image = None
-        if 'photo' in data:
-            image = data['photo']
+        # image = None
+        # if 'photo' in data:
+        #     image = data['photo']
 
-        if image:
-           if image.size > (512 * 1024):
-               raise serializers.ValidationError(f"La imagen es demasiado grande, el peso máximo permitido es de 512KB y el tamaño enviado es de {round(image.size / 1024)}KB")
+        # if image:
+        #    if image.size > (512 * 1024):
+        #        raise serializers.ValidationError(f"La imagen es demasiado grande, el peso máximo permitido es de 512KB y el tamaño enviado es de {round(image.size / 1024)}KB")
 
         return data
 
@@ -111,7 +109,7 @@ class ClienteModifySerializer(serializers.Serializer):
         cliente.nombre = data.get('nombre', cliente.nombre)
         cliente.apellidos = data.get('apellidos', cliente.apellidos)
         cliente.email = data.get('email', cliente.email)
-        cliente.foto = data.get('foto', cliente.foto)
+        #cliente.foto = data.get('foto', cliente.foto)
         cliente.telefono = data.get('telefono', cliente.telefono)
         cliente.calle = data.get('calle', cliente.calle)
         cliente.dni = data.get('dni', cliente.dni)
