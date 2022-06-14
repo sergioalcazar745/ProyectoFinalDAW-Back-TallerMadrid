@@ -1,0 +1,1 @@
+web: gunicorn TallerMadrid.wsgi --log-file -
