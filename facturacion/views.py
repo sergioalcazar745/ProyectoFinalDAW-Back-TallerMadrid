@@ -1,4 +1,5 @@
 from ast import For
+from django.http import HttpResponse
 from posixpath import split
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -11,6 +12,9 @@ from facturacion.models import Gasto
 from facturacion.serializers import *
 from vehiculo.serializers import *
 from vehiculo.models import Arreglo
+
+
+
 
 # Create your views here.
 class GastoViewSet(viewsets.GenericViewSet):
@@ -79,15 +83,27 @@ class GastoViewSet(viewsets.GenericViewSet):
         return Response(data, status=status.HTTP_200_OK)
         
         
-    @action(detail=False, methods=['delete'])
+    @action(detail=False, methods=['post'])
     def DeleteGasto(self, request):
-        queryset=Gasto.objects.filter(id=int(request.GET['id'])).first()
+        queryset=Gasto.objects.filter(id=int(request.data['id'])).first()
         if queryset is None:
             data="No hay ningun gasto con ese ID"
         else:
             objeto=queryset.delete()
             data="Objeto borrado con exito"
         return Response(data, status=status.HTTP_200_OK)
+    
+    
+    @action(detail=False, methods=['post'])
+    def factura(self, request):
+        # empleados = Empleado.objects.all()
+        data = {
+            'count': "prueba",
+            'empleados': "prueba"
+        }
+      
+        pdf = render_to_pdf('pdf/factura.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
         
         
     
