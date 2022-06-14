@@ -7,12 +7,14 @@ from vehiculo.models import Vehiculo
 from vehiculo.serializers import ArregloActualizarSerializer, ArregloModelSerializer, ArregloSerializer, VehiculoActualizarSerializer, VehiculoModelSerializer, VehiculoSerializer
 
 from vehiculo.models import Arreglo
+from rest_framework.permissions import IsAuthenticated
 
 
 
 class VehiculoViewSet(viewsets.GenericViewSet):
     model = Vehiculo
     serializer_class = VehiculoModelSerializer
+    permission_classes=(IsAuthenticated,)
 
     @action(detail=False, methods=['get'])
     def vehiculos(self, request):
@@ -83,6 +85,7 @@ class VehiculoViewSet(viewsets.GenericViewSet):
 class ArregloViewSet(viewsets.GenericViewSet):
     model = Arreglo
     serializer_class = ArregloModelSerializer
+    permission_classes=(IsAuthenticated,)
 
     @action(detail=False, methods=['get'])
     def arreglos(self, request):

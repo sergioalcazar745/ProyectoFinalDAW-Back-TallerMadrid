@@ -14,11 +14,15 @@ from vehiculo.serializers import *
 from vehiculo.models import Arreglo
 
 
+#pdf
+
+
+
 
 
 # Create your views here.
 class GastoViewSet(viewsets.GenericViewSet):
-    #permission_classes=(IsAuthenticated,)
+    permission_classes=(IsAuthenticated,)
       
     @action(detail=False, methods=['post'])
     def addGasto(self, request):
@@ -93,17 +97,13 @@ class GastoViewSet(viewsets.GenericViewSet):
             data="Objeto borrado con exito"
         return Response(data, status=status.HTTP_200_OK)
     
-    
     @action(detail=False, methods=['post'])
-    def factura(self, request):
-        # empleados = Empleado.objects.all()
-        data = {
-            'count': "prueba",
-            'empleados': "prueba"
-        }
-      
-        pdf = render_to_pdf('pdf/factura.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
-        
-        
-    
+    def pdf(self,request):
+        queryset=Gasto.objects.filter(id=int(request.GET['id'])).first()
+        serializer=GastoUpdateSerializer(queryset, data=request.data)
+        print("este es el serializer")
+        print(serializer)
+        serializer.is_valid(raise_exception=True)
+        objeto=serializer.save()
+        data=GastoModelSerializer(objeto).data
+        return Response(data, status=status.HTTP_200_OK)

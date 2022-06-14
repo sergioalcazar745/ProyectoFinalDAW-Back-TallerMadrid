@@ -24,7 +24,7 @@ from django.core.mail import EmailMultiAlternatives
 
 class ClienteViewSet(viewsets.GenericViewSet):
 
-    #permission_classes=(IsAuthenticated,)    
+    permission_classes=(IsAuthenticated,)    
     @action(detail=False, methods=['post'])
     def signup(self, request):
         """User sign up."""
