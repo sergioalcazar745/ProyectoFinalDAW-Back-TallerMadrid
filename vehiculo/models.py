@@ -22,6 +22,7 @@ class Arreglo(models.Model):
     precio=models.DecimalField(null=True, max_digits=6, decimal_places=2)
     vehiculo=models.ForeignKey(Vehiculo,on_delete=models.CASCADE,null=True)
     
+    
     def __str__(self):
         return f'{self.fecha, self.descripcion, self.precio, self.vehiculo}'
     
