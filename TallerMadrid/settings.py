@@ -197,9 +197,9 @@ EMAIL_HOST_PASSWORD = '@palaci0'
 EMAIL_USE_SSL = True
 
 #LENGUAJE
-LANGUAGE_CODE = 'es'
-TIME_ZONE = 'America/Lima'
-USE_I18N = True
+# LANGUAGE_CODE = 'es'
+# TIME_ZONE = 'America/Lima'
+# USE_I18N = True
 
 #Heroku
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
