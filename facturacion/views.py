@@ -13,13 +13,6 @@ from facturacion.serializers import *
 from vehiculo.serializers import *
 from vehiculo.models import Arreglo
 
-
-#pdf
-
-
-
-
-
 # Create your views here.
 class GastoViewSet(viewsets.GenericViewSet):
     permission_classes=(IsAuthenticated,)
