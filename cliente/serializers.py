@@ -106,6 +106,7 @@ class ClienteModifySerializer(serializers.Serializer):
 
     def update(self, cliente, data):
         print("UPDATE")
+        print(data['calle'])
         cliente.nombre = data.get('nombre', cliente.nombre)
         cliente.apellidos = data.get('apellidos', cliente.apellidos)
         cliente.email = data.get('email', cliente.email)
