@@ -132,11 +132,11 @@ WSGI_APPLICATION = 'TallerMadrid.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'taller',
-        'USER': 'postgres',
-        'PASSWORD': 'sergio2022',
-        'HOST': '127.0.0.1',
-        'DATABASE_PORT':'5432'
+        'NAME': 'd8a979g3jjvs41',
+        'USER': 'oeufhtmdwhwrsu',
+        'PASSWORD': '7de961a8df93968ebbc04425967a4d72d9619060c451cc9e6fc5ed135904b82a',
+        'HOST': 'ec2-54-75-184-144.eu-west-1.compute.amazonaws.com',
+        'PORT':'5432'
     }
 }
 
