@@ -67,7 +67,7 @@ ROOT_URLCONF = 'TallerMadrid.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'email')],
+        'DIRS': [os.path.join(BASE_DIR, 'email'),'pdf/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
