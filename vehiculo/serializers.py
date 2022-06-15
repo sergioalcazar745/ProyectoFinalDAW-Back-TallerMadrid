@@ -107,7 +107,7 @@ class ArregloActualizarSerializer(serializers.Serializer):
     fecha = serializers.DateField(required=False)
     descripcion = serializers.CharField(min_length=1, max_length=150, required=False)
     precio = serializers.DecimalField(max_digits=6, decimal_places=2, min_value=0, required=False)    
-    vehiculo = serializers.HiddenField(default=None, required=False)
+    vehiculo=serializers.PrimaryKeyRelatedField(queryset=Vehiculo.objects.all(),required=False)   
     
     def validate(self,data):
         return data
@@ -120,5 +120,7 @@ class ArregloActualizarSerializer(serializers.Serializer):
                 arreglo.descripcion = data.get('descripcion', arreglo.descripcion)
             elif d == "precio" and arreglo.precio != data[d]:
                 arreglo.precio = data.get('precio', arreglo.precio)
+            elif d == "vehiculo" and arreglo.vehiculo != data[d]:
+                arreglo.vehiculo = data.get('vehiculo', arreglo.vehiculo)
         arreglo.save()
         return arreglo
