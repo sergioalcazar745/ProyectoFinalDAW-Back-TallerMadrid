@@ -11,9 +11,9 @@ from cliente.views import *
 
 router = DefaultRouter()
 router.register(r'cliente', cliente_views.ClienteViewSet, basename='cliente')
+router.register(r'clientecontacto', cliente_views.ClienteContactoViewSet, basename='clientecontacto')
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
-    path('', include(router.urls)), 
-
+    path('', include(router.urls)),
 ]

@@ -72,8 +72,10 @@ class ClienteViewSet(viewsets.GenericViewSet):
             queryset.delete()
             return Response("Se ha eliminado correctamente", status=status.HTTP_200_OK)
         except Cliente.DoesNotExist:
-            return Response({'mensaje': "No existe el cliente"}, status=status.HTTP_200_OK)        
-        
+            return Response({'mensaje': "No existe el cliente"}, status=status.HTTP_200_OK)     
+
+class ClienteContactoViewSet(viewsets.GenericViewSet):
+    
     @action(detail=False, methods=['post'])
     def formularioContacto(self,request):
         # print (request.data['nombre'])
@@ -116,4 +118,3 @@ class ClienteViewSet(viewsets.GenericViewSet):
         else:
             data="Ha ocurrido un problema, no se ha podido enviar el correo"
             return Response(data, status=status.HTTP_404_NOT_FOUND)
-        
