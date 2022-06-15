@@ -144,7 +144,7 @@ class ArregloViewSet(viewsets.GenericViewSet):
         if arreglo_serializer.is_valid():
             arreglo_response=arreglo_serializer.save()
             arreglo_serializer_response=ArregloActualizarSerializer(arreglo_response)
-            return Response(arreglo_serializer_response.data, status=status.HTTP_400_BAD_REQUEST)
+            return Response(arreglo_serializer_response.data, status=status.HTTP_200_OK)
         else:
             return Response({'mensaje': arreglo_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     
